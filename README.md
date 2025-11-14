@@ -1,192 +1,434 @@
-# EduFlow - Plataforma de Aprendizaje en Línea
+# 🎓 EduFlow - Plataforma de Aprendizaje en Línea
 
-EduFlow es una moderna plataforma de aprendizaje para la creación y gestión de cursos. Permite a los educadores registrarse, crear cursos detallados, subir contenido multimedia y previsualizar sus cursos antes de publicarlos.
+<div align="center">
 
-## 🚀 Características
+![EduFlow](https://img.shields.io/badge/EduFlow-Learning%20Platform-indigo?style=for-the-badge)
+![React](https://img.shields.io/badge/React-18.2-blue?style=for-the-badge&logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.4-blue?style=for-the-badge&logo=typescript)
+![Supabase](https://img.shields.io/badge/Supabase-Backend-green?style=for-the-badge&logo=supabase)
+![Netlify](https://img.shields.io/badge/Netlify-Deployed-00C7B7?style=for-the-badge&logo=netlify)
 
-- ✅ **Autenticación completa** con Supabase Auth
-- ✅ **Gestión de cursos** con módulos y lecciones
-- ✅ **Subida de archivos** a Supabase Storage (imágenes de cursos, videos MP4 y PDFs)
-- ✅ **Drag & Drop** para reordenar módulos y lecciones
-- ✅ **Vista previa** de cursos antes de publicar
-- ✅ **Interfaz moderna** con Tailwind CSS y modo oscuro
-- ✅ **Notificaciones toast** para mejor UX
+**Una plataforma moderna tipo Udemy para la creación y gestión de cursos online**
 
-## 📋 Requisitos Previos
+[🌐 Ver Demo en Vivo](https://sparkling-cannoli-ab13a6.netlify.app/) | [📖 Documentación](#-uso) | [🚀 Instalación](#-instalación)
 
-- Node.js 18+ y npm/yarn
-- Una cuenta de Supabase (gratuita en [supabase.com](https://supabase.com))
+</div>
+
+---
+
+## 📋 Tabla de Contenidos
+
+- [Descripción](#-descripción)
+- [Características Principales](#-características-principales)
+- [Tecnologías Utilizadas](#-tecnologías-utilizadas)
+- [Estructura del Proyecto](#-estructura-del-proyecto)
+- [Instalación](#-instalación)
+- [Configuración](#-configuración)
+- [Uso](#-uso)
+- [Seguridad](#-seguridad)
+- [Despliegue](#-despliegue)
+- [Solución de Problemas](#-solución-de-problemas)
+- [Contribuir](#-contribuir)
+- [Licencia](#-licencia)
+
+---
+
+## 🎯 Descripción
+
+**EduFlow** es una plataforma de aprendizaje en línea profesional diseñada para educadores que desean crear, gestionar y publicar cursos online. Inspirada en plataformas como Udemy, EduFlow ofrece una experiencia intuitiva y completa para la creación de contenido educativo estructurado en módulos y lecciones.
+
+La plataforma permite a los docentes:
+- Crear cursos con estructura modular (módulos → lecciones)
+- Subir contenido multimedia (videos MP4 y documentos PDF)
+- Organizar contenido mediante drag & drop
+- Previsualizar cursos antes de publicarlos
+- Gestionar múltiples cursos desde un dashboard centralizado
+
+---
+
+## ✨ Características Principales
+
+### 🔐 Autenticación y Autorización
+- **Autenticación completa** con Supabase Auth
+- **Sistema de roles**: Docente, Estudiante, Coordinador
+- **Control de acceso**: Solo docentes pueden crear y editar cursos
+- **Protección de contraseñas comprometidas** (opcional)
+
+### 📚 Gestión de Cursos
+- **Creación de cursos** con información completa (título, descripción, categoría, imagen)
+- **Estructura modular**: Organiza contenido en módulos y lecciones
+- **Drag & Drop**: Reordena módulos y lecciones de forma intuitiva
+- **Estados de publicación**: Borrador o Publicado
+- **Vista previa**: Visualiza el curso desde la perspectiva del estudiante
+
+### 📁 Gestión de Archivos
+- **Subida de imágenes** para portadas de cursos (Supabase Storage)
+- **Soporte multimedia**: Videos MP4 y documentos PDF
+- **Barra de progreso** en tiempo real durante la subida
+- **Vista previa de contenido** integrada en el editor
+- **Gestión de archivos**: Eliminación y reemplazo de contenido
+
+### 🎨 Interfaz de Usuario
+- **Diseño moderno** con Tailwind CSS
+- **Modo oscuro** integrado
+- **Responsive design** para todos los dispositivos
+- **Animaciones fluidas** con Framer Motion
+- **Notificaciones toast** para feedback inmediato
+- **UX optimizada** con estados de carga y errores
+
+### 🔒 Seguridad
+- **Row Level Security (RLS)** en todas las tablas
+- **Políticas de acceso** basadas en roles y propiedad
+- **Funciones de base de datos** con `SECURITY DEFINER` y `search_path` fijo
+- **Validación de tipos** con TypeScript
+- **Protección contra vulnerabilidades** SQL injection
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+### Frontend
+- **[React](https://react.dev/)** 18.2 - Biblioteca de UI
+- **[TypeScript](https://www.typescriptlang.org/)** 5.4 - Tipado estático
+- **[Vite](https://vitejs.dev/)** 5.3 - Build tool y dev server
+- **[Tailwind CSS](https://tailwindcss.com/)** 3.4 - Framework CSS utility-first
+- **[Framer Motion](https://www.framer.com/motion/)** 11.2 - Animaciones
+- **[React Beautiful DnD](https://github.com/atlassian/react-beautiful-dnd)** 13.1 - Drag & Drop
+- **[React Hot Toast](https://react-hot-toast.com/)** 2.4 - Notificaciones
+
+### Backend & Base de Datos
+- **[Supabase](https://supabase.com/)** - Backend as a Service
+  - **PostgreSQL** - Base de datos relacional
+  - **Supabase Auth** - Autenticación y autorización
+  - **Supabase Storage** - Almacenamiento de archivos
+  - **Row Level Security (RLS)** - Seguridad a nivel de fila
+
+### Herramientas de Desarrollo
+- **[PostCSS](https://postcss.org/)** 8.4 - Procesamiento CSS
+- **[Autoprefixer](https://github.com/postcss/autoprefixer)** 10.4 - Compatibilidad CSS
+- **[UUID](https://www.npmjs.com/package/uuid)** 9.0 - Generación de IDs únicos
+
+### Despliegue
+- **[Netlify](https://www.netlify.com/)** - Hosting y CI/CD
+- **Node.js** 18+ - Runtime de JavaScript
+
+---
+
+## 📁 Estructura del Proyecto
+
+```
+EduFlow/
+├── components/                    # Componentes React
+│   ├── Auth.tsx                  # Componente de autenticación (login/registro)
+│   ├── CourseEditor.tsx          # Editor completo de cursos
+│   ├── CoursePreview.tsx         # Vista previa del curso
+│   └── icons.tsx                 # Iconos SVG personalizados
+│
+├── lib/                          # Utilidades y configuraciones
+│   └── supabaseClient.ts         # Cliente configurado de Supabase
+│
+├── supabase/
+│   └── migrations/               # Migraciones SQL de la base de datos
+│       ├── 20250101000000_initial_schema.sql
+│       ├── 20250101000001_fix_search_path.sql
+│       ├── 20250101000002_harden_functions_and_auth.sql
+│       ├── 20250101000003_finalize_schema_and_dnd.sql
+│       ├── 20250101000005_atomic_course_save.sql
+│       ├── 20250101000011_final_fixes_and_architecture.sql
+│       └── 20250101000012_fix_null_content_handling.sql
+│
+├── App.tsx                       # Componente principal de la aplicación
+├── index.tsx                     # Punto de entrada de la aplicación
+├── types.ts                      # Definiciones de tipos TypeScript
+├── index.html                    # Template HTML
+├── index.css                     # Estilos globales
+│
+├── vite.config.ts                # Configuración de Vite
+├── tailwind.config.js            # Configuración de Tailwind CSS
+├── postcss.config.js             # Configuración de PostCSS
+├── tsconfig.json                 # Configuración de TypeScript
+├── netlify.toml                  # Configuración de despliegue en Netlify
+├── package.json                  # Dependencias y scripts del proyecto
+└── README.md                     # Este archivo
+```
+
+### Descripción de Componentes Principales
+
+- **`App.tsx`**: Componente raíz que gestiona el estado global, autenticación, y navegación entre vistas (Dashboard, Editor, Preview)
+- **`Auth.tsx`**: Maneja el registro e inicio de sesión de usuarios con validación de roles
+- **`CourseEditor.tsx`**: Editor completo con funcionalidades de drag & drop, subida de archivos, y gestión de módulos/lecciones
+- **`CoursePreview.tsx`**: Vista previa del curso desde la perspectiva del estudiante
+- **`supabaseClient.ts`**: Cliente singleton de Supabase configurado con variables de entorno
+
+---
+
+## 🚀 Instalación
+
+### Prerrequisitos
+
+- **Node.js** 18 o superior
+- **npm** o **yarn**
+- Una cuenta de **Supabase** (gratuita en [supabase.com](https://supabase.com))
 - Un proyecto de Supabase configurado
 
-## 🛠️ Instalación
-
-### 1. Clonar e instalar dependencias
+### Paso 1: Clonar el Repositorio
 
 ```bash
-# Instalar dependencias
-yarn install
-# o
+git clone https://github.com/tu-usuario/EduFlow.git
+cd EduFlow
+```
+
+### Paso 2: Instalar Dependencias
+
+```bash
 npm install
+# o
+yarn install
 ```
 
-### 2. Configurar variables de entorno
+### Paso 3: Configurar Variables de Entorno
 
-Crea un archivo `.env` en la raíz del proyecto basándote en `.env.example`:
-
-```bash
-cp .env.example .env
-```
-
-Edita `.env` y agrega tus credenciales de Supabase:
+Crea un archivo `.env` en la raíz del proyecto:
 
 ```env
 VITE_SUPABASE_URL=tu_url_de_supabase
 VITE_SUPABASE_ANON_KEY=tu_clave_anon_de_supabase
 ```
 
-Puedes encontrar estas credenciales en tu proyecto de Supabase:
-- Ve a **Settings** → **API**
-- Copia la **URL** del proyecto y la **anon/public key**
+**Cómo obtener las credenciales:**
+1. Ve a tu proyecto en [Supabase Dashboard](https://app.supabase.com)
+2. Navega a **Settings** → **API**
+3. Copia la **Project URL** y la **anon/public key**
 
-### 3. Configurar la base de datos en Supabase
+---
 
-1. Ve a tu proyecto de Supabase
-2. Abre el **SQL Editor**
-3. Ejecuta las migraciones en orden cronológico:
+## ⚙️ Configuración
 
-   - `supabase/migrations/20250101000000_initial_schema.sql` (esquema inicial)
-   - `supabase/migrations/20250101000001_fix_search_path.sql` (corrección de seguridad)
-   - `supabase/migrations/20250101000002_harden_functions_and_auth.sql` (hardening de funciones)
-   - `supabase/migrations/20250101000003_finalize_schema_and_dnd.sql` (finalización del esquema)
-   - `supabase/migrations/20250101000005_atomic_course_save.sql` (guardado atómico)
-   - `supabase/migrations/20250101000011_final_fixes_and_architecture.sql` (correcciones finales)
-   - `supabase/migrations/20250101000012_fix_null_content_handling.sql` (manejo de contenido null) ⚠️ **NUEVA**
+### Configuración de la Base de Datos
 
-   **Importante:** Ejecuta las migraciones en orden, una por una, verificando que cada una se ejecute correctamente antes de continuar.
+1. **Abre el SQL Editor** en tu proyecto de Supabase
+2. **Ejecuta las migraciones en orden cronológico**:
 
-### 4. Configurar Storage Buckets
+```sql
+-- Ejecuta cada migración una por una, en este orden:
+1. supabase/migrations/20250101000000_initial_schema.sql
+2. supabase/migrations/20250101000001_fix_search_path.sql
+3. supabase/migrations/20250101000002_harden_functions_and_auth.sql
+4. supabase/migrations/20250101000003_finalize_schema_and_dnd.sql
+5. supabase/migrations/20250101000005_atomic_course_save.sql
+6. supabase/migrations/20250101000011_final_fixes_and_architecture.sql
+7. supabase/migrations/20250101000012_fix_null_content_handling.sql
+```
 
-Los buckets de almacenamiento se crean automáticamente con la primera migración, pero verifica que estén configurados:
+⚠️ **Importante**: Ejecuta las migraciones en orden, verificando que cada una se complete correctamente antes de continuar.
+
+### Configuración de Storage Buckets
+
+Los buckets se crean automáticamente con la primera migración. Verifica que existan:
 
 1. Ve a **Storage** en tu dashboard de Supabase
-2. Verifica que existan estos buckets:
-   - `course-images` (público) - para imágenes de cursos
-   - `lesson-files` (público) - para videos MP4 y PDFs de lecciones
+2. Verifica que existan estos buckets públicos:
+   - `course-images` - Para imágenes de portada de cursos
+   - `lesson-files` - Para videos MP4 y PDFs de lecciones
 
-### 5. Habilitar protección de contraseñas comprometidas (Recomendado)
+### Configuración de Seguridad (Recomendado)
 
-1. Ve a **Authentication** → **Settings** en tu dashboard de Supabase
-2. Encuentra la sección **Leaked Password Protection**
-3. Habilita esta opción para mayor seguridad
+1. Ve a **Authentication** → **Settings** en Supabase
+2. Habilita **Leaked Password Protection** para mayor seguridad
 
-### 6. Ejecutar la aplicación
-
-```bash
-yarn dev
-# o
-npm run dev
-```
-
-La aplicación estará disponible en `http://localhost:3000`
-
-## 📚 Estructura del Proyecto
-
-```
-EduFlowDualite/
-├── components/          # Componentes React
-│   ├── Auth.tsx        # Componente de autenticación
-│   ├── CourseEditor.tsx # Editor de cursos
-│   ├── CoursePreview.tsx # Vista previa de cursos
-│   └── icons.tsx       # Iconos SVG
-├── lib/
-│   └── supabaseClient.ts # Cliente de Supabase
-├── supabase/
-│   └── migrations/     # Migraciones SQL
-├── types.ts           # Definiciones de tipos TypeScript
-├── App.tsx            # Componente principal
-├── index.tsx          # Punto de entrada
-└── package.json       # Dependencias
-```
+---
 
 ## 🎯 Uso
 
-### Registro e Inicio de Sesión
+### Inicio de Sesión y Registro
 
 1. Al abrir la aplicación, verás la pantalla de autenticación
-2. Para crear una cuenta:
+2. **Para registrarse**:
    - Haz clic en "Regístrate"
    - Ingresa tu email y contraseña
    - Selecciona tu rol (Docente, Estudiante o Coordinador)
-   - **Importante:** Solo los usuarios con rol "Docente" pueden crear y editar cursos
-3. Verifica tu email (si la verificación de email está habilitada en Supabase)
+   - ⚠️ **Solo usuarios con rol "Docente" pueden crear y editar cursos**
+3. Verifica tu email si la verificación está habilitada en Supabase
 
 ### Crear un Curso
 
-1. Una vez autenticado como Docente, verás el dashboard
-2. Haz clic en "Crear Nuevo Curso"
-3. Completa la información del curso:
-   - Título
+1. **Accede al Dashboard**: Una vez autenticado como Docente, verás tu dashboard
+2. **Crear nuevo curso**: Haz clic en "Crear Nuevo Curso"
+3. **Completa la información básica**:
+   - Título del curso
    - Descripción
    - Categoría
-   - Imagen del curso (opcional)
-4. Agrega módulos haciendo clic en "Agregar Módulo"
-5. Dentro de cada módulo, agrega lecciones con "Agregar Lección"
-6. Para cada lección, puedes:
-   - Subir un archivo (MP4 para videos o PDF)
-   - Ver el progreso de subida
-   - Eliminar el archivo si es necesario
-7. Usa drag & drop para reordenar módulos y lecciones
-8. Haz clic en "Guardar Cambios" para persistir todo en Supabase
+   - Imagen de portada (opcional, arrastra y suelta o haz clic para seleccionar)
+4. **Agregar módulos**: Haz clic en "Agregar Módulo" y dale un título
+5. **Agregar lecciones**: Dentro de cada módulo, haz clic en "Agregar Lección"
+6. **Subir contenido**:
+   - Para cada lección, puedes subir un archivo (MP4 para videos o PDF)
+   - Observa la barra de progreso durante la subida
+   - Puedes eliminar o reemplazar archivos si es necesario
+7. **Reorganizar contenido**: Usa drag & drop para reordenar módulos y lecciones
+8. **Guardar cambios**: Haz clic en "Guardar Cambios" para persistir todo en Supabase
 
 ### Vista Previa
 
 - Haz clic en "Vista Previa" en el editor para ver cómo se verá el curso para los estudiantes
 - Navega entre módulos y lecciones desde la barra lateral
+- Visualiza videos y documentos directamente en el navegador
 
 ### Publicar un Curso
 
 - En el editor, activa el toggle "Publicado" para hacer el curso visible
 - Los cursos publicados pueden ser vistos por estudiantes (si implementas esa funcionalidad)
+- Los cursos en borrador solo son visibles para el docente propietario
+
+### Gestionar Cursos Existentes
+
+- **Editar**: Haz clic en el icono de editar en la tarjeta del curso
+- **Eliminar**: Haz clic en el icono de eliminar (se requiere confirmación)
+- **Ver estado**: El estado (Publicado/Borrador) se muestra en cada tarjeta
+
+---
 
 ## 🔒 Seguridad
 
-- **Row Level Security (RLS)** está habilitado en todas las tablas
-- Los docentes solo pueden ver y editar sus propios cursos
-- Los estudiantes solo pueden ver cursos publicados (si implementas esa vista)
-- Las funciones de base de datos usan `SECURITY DEFINER` con `search_path` fijo para prevenir vulnerabilidades
+EduFlow implementa múltiples capas de seguridad:
+
+### Row Level Security (RLS)
+- **Habilitado en todas las tablas**: `profiles`, `courses`, `modules`, `lessons`
+- **Políticas de acceso**:
+  - Los docentes solo pueden ver y editar sus propios cursos
+  - Los estudiantes solo pueden ver cursos publicados
+  - Los usuarios solo pueden modificar su propio perfil
+
+### Funciones de Base de Datos
+- **`SECURITY DEFINER`**: Funciones ejecutadas con permisos elevados pero controlados
+- **`search_path` fijo**: Previene vulnerabilidades de inyección SQL
+- **Validación de entrada**: Todas las entradas son validadas antes de procesarse
+
+### Autenticación
+- **Supabase Auth**: Sistema robusto de autenticación
+- **Tokens JWT**: Manejo seguro de sesiones
+- **Protección de contraseñas**: Opción de protección contra contraseñas comprometidas
+
+### Frontend
+- **TypeScript**: Validación de tipos en tiempo de compilación
+- **Validación de formularios**: Validación tanto en cliente como servidor
+- **Sanitización**: Contenido sanitizado antes de mostrar
+
+---
+
+## 🌐 Despliegue
+
+### Despliegue en Netlify
+
+EduFlow está configurado para desplegarse fácilmente en Netlify:
+
+1. **Conecta tu repositorio** a Netlify
+2. **Configura las variables de entorno** en Netlify:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+3. **Netlify detectará automáticamente** la configuración desde `netlify.toml`
+4. **El despliegue se realizará automáticamente** en cada push a la rama principal
+
+### Configuración de Netlify
+
+El archivo `netlify.toml` ya está configurado con:
+- Comando de build: `npm install && npm run build`
+- Directorio de publicación: `dist`
+- Node.js versión: 18
+
+### Demo en Vivo
+
+🌐 **[Ver aplicación desplegada](https://sparkling-cannoli-ab13a6.netlify.app/)**
+
+---
 
 ## 🐛 Solución de Problemas
 
 ### Error: "Supabase URL and Anon Key must be defined"
-- Verifica que el archivo `.env` existe y contiene las variables correctas
+
+**Solución:**
+- Verifica que el archivo `.env` existe en la raíz del proyecto
+- Asegúrate de que las variables no tengan comillas ni espacios alrededor del `=`
 - Reinicia el servidor de desarrollo después de crear/modificar `.env`
 
 ### Error al subir archivos
+
+**Solución:**
 - Verifica que los buckets de Storage estén creados y sean públicos
-- Verifica los límites de tamaño de archivo en Supabase (por defecto: 5MB para imágenes, 512MB para archivos de lecciones)
+- Revisa los límites de tamaño en Supabase:
+  - Imágenes: 5MB por defecto
+  - Archivos de lecciones: 512MB por defecto
+- Verifica los permisos de Storage en Supabase
 
 ### Error al guardar cursos
+
+**Solución:**
 - Verifica que todas las migraciones se hayan ejecutado correctamente
-- Revisa la consola del navegador para ver errores específicos
-- Verifica que estés autenticado como Docente
+- Revisa la consola del navegador para errores específicos
+- Asegúrate de estar autenticado como Docente
+- Verifica que la función RPC `save_course_with_children` existe en Supabase
 
 ### La función RPC no funciona
-- Asegúrate de haber ejecutado todas las migraciones, especialmente `20250101000012_fix_null_content_handling.sql`
-- Verifica en el SQL Editor de Supabase que la función `save_course_with_children` existe
 
-## 📝 Notas Técnicas
+**Solución:**
+- Ejecuta la migración `20250101000012_fix_null_content_handling.sql`
+- Verifica en el SQL Editor de Supabase que la función existe
+- Revisa los logs de Supabase para errores específicos
 
-- El proyecto usa **Vite** como bundler
-- **Tailwind CSS** para estilos
-- **TypeScript** para type safety
-- **React Hot Toast** para notificaciones
-- **React Beautiful DnD** para drag & drop
-- **Framer Motion** para animaciones
+### Problemas con drag & drop
+
+**Solución:**
+- Asegúrate de que `react-beautiful-dnd` esté correctamente instalado
+- Verifica que los IDs de módulos y lecciones sean únicos
+- Revisa la consola del navegador para errores de JavaScript
+
+---
 
 ## 🤝 Contribuir
 
-Este proyecto fue generado a través de Dualite. Para más información, visita [dualite.dev](https://dualite.dev).
+Las contribuciones son bienvenidas. Para contribuir:
+
+1. **Fork** el proyecto
+2. Crea una **rama** para tu feature (`git checkout -b feature/AmazingFeature`)
+3. **Commit** tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un **Pull Request**
+
+### Guías de Contribución
+
+- Sigue las convenciones de código existentes
+- Añade tests para nuevas funcionalidades
+- Actualiza la documentación según sea necesario
+- Asegúrate de que el código pase los linters
+
+---
 
 ## 📄 Licencia
 
-Este proyecto es de código abierto y está disponible bajo la licencia MIT.
+Este proyecto es de código abierto y está disponible bajo la [Licencia MIT](LICENSE).
+
+---
+
+## 👨‍💻 Autor
+
+Desarrollado con ❤️ para la comunidad educativa.
+
+---
+
+## 🔗 Enlaces Útiles
+
+- [🌐 Demo en Vivo](https://sparkling-cannoli-ab13a6.netlify.app/)
+- [📚 Documentación de Supabase](https://supabase.com/docs)
+- [⚛️ Documentación de React](https://react.dev/)
+- [🎨 Documentación de Tailwind CSS](https://tailwindcss.com/docs)
+- [⚡ Documentación de Vite](https://vitejs.dev/)
+
+---
+
+<div align="center">
+
+**⭐ Si este proyecto te resulta útil, considera darle una estrella en GitHub ⭐**
+
+Hecho con ❤️ usando React, TypeScript y Supabase
+
+</div>
