@@ -1,0 +1,5 @@
+{
+  "name": "EduFlow",
+  "description": "EduFlow is a modern, Udemy-like learning platform designed for course creation and management. This MVP focuses on the core teacher workflow, allowing educators to register, create detailed courses with modules and lessons, upload content (videos/PDFs), and preview their courses from a student's perspective before publishing.",
+  "requestFramePermissions": []
+}
