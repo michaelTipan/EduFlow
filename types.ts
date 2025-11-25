@@ -43,6 +43,7 @@ export interface Course {
   modules: Module[];
   isPublished: boolean;
   teacher_id: string;
+  teacherName?: string;
 }
 
 export interface Enrollment {

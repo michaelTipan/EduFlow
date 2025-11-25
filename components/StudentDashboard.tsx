@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Course, Enrollment, Progress } from '../types';
-import { supabase } from '../lib/supabaseClient';
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { BookOpenIcon, PlayCircleIcon, CheckCircleIcon } from './icons';
+import { supabase } from '../lib/supabaseClient';
+import { Course, Enrollment, Progress } from '../types';
+import { BookOpenIcon, PlayCircleIcon } from './icons';
 
 interface StudentDashboardProps {
     studentId: string;
@@ -48,6 +48,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ studentId, o
                 .from('courses')
                 .select(`
                     id, title, description, category, image_url, is_published, teacher_id,
+                    profiles:teacher_id (first_name, last_name, full_name),
                     modules (
                         id, title, order,
                         lessons (
@@ -85,6 +86,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ studentId, o
                 imageUrl: c.image_url,
                 isPublished: c.is_published,
                 teacher_id: c.teacher_id,
+                teacherName: c.profiles ? (c.profiles.full_name || `${c.profiles.first_name || ''} ${c.profiles.last_name || ''}`.trim()) : 'Instructor EduFlow',
                 modules: c.modules.map((m: any) => ({
                     id: m.id,
                     title: m.title,
@@ -144,6 +146,19 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ studentId, o
         const completedLessons = progress.filter(p => courseLessonIds.includes(p.lesson_id) && p.is_completed).length;
 
         return Math.round((completedLessons / totalLessons) * 100);
+    };
+
+    const getEstimatedDuration = (course: Course) => {
+        const totalLessons = course.modules.reduce((acc, m) => acc + m.lessons.length, 0);
+        // Estimate 15 mins per lesson
+        const totalMinutes = totalLessons * 15;
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+
+        if (hours > 0) {
+            return `${hours}h ${minutes > 0 ? `${minutes}m` : ''}`;
+        }
+        return `${minutes} min`;
     };
 
     const filteredCourses = courses.filter(c =>
@@ -213,9 +228,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ studentId, o
                                     </button>
                                     {isEnrolled(course.id) ? (
                                         <button
-                                            onClick={() => {
-                                                setActiveTab('my-courses');
-                                            }}
+                                            onClick={() => onPlayCourse(course)}
                                             className="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 px-4 rounded-xl transition-colors shadow-md hover:shadow-lg"
                                         >
                                             Ver Curso
@@ -251,7 +264,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ studentId, o
                                 </svg>
                             </button>
                             <div className="absolute bottom-6 left-6 right-6 z-20">
-                                <div className="flex items-center gap-3 mb-2">
+                                <div className="flex flex-wrap items-center gap-3 mb-2">
                                     <span className="text-xs font-bold text-white bg-cyan-600 px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
                                         {selectedCourseForDetails.category}
                                     </span>
@@ -259,8 +272,16 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ studentId, o
                                         <BookOpenIcon className="w-3.5 h-3.5" />
                                         {selectedCourseForDetails.modules.reduce((acc, m) => acc + m.lessons.length, 0)} lecciones
                                     </span>
+                                    <span className="text-xs text-slate-200 flex items-center gap-1 font-medium bg-black/30 px-2 py-1 rounded-lg backdrop-blur-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <polyline points="12 6 12 12 16 14"></polyline>
+                                        </svg>
+                                        {getEstimatedDuration(selectedCourseForDetails)}
+                                    </span>
                                 </div>
-                                <h2 className="text-3xl font-bold text-white shadow-sm">{selectedCourseForDetails.title}</h2>
+                                <h2 className="text-3xl font-bold text-white shadow-sm mb-1">{selectedCourseForDetails.title}</h2>
+                                <p className="text-slate-300 text-sm font-medium">Por: {selectedCourseForDetails.teacherName}</p>
                             </div>
                         </div>
                         <div className="p-6 sm:p-8">
@@ -301,13 +322,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ studentId, o
                                 </button>
                                 {isEnrolled(selectedCourseForDetails.id) ? (
                                     <button
-                                        onClick={() => {
-                                            setSelectedCourseForDetails(null);
-                                            setActiveTab('my-courses');
-                                        }}
+                                        onClick={() => onPlayCourse(selectedCourseForDetails)}
                                         className="px-8 py-2.5 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 shadow-lg hover:shadow-green-500/30 transition-all"
                                     >
-                                        Ir al Curso
+                                        Ver Curso
                                     </button>
                                 ) : (
                                     <button

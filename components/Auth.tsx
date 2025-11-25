@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { supabase } from '../lib/supabaseClient';
 import { UserRole } from '../types';
-import { BookOpenIcon } from './icons';
+import logo from '/logo.jpg';
+
 
 type AuthMode = 'login' | 'register';
 
@@ -80,9 +81,9 @@ export const Auth: React.FC = () => {
 
         if (signInError) {
           // Mejorar mensajes de error
-          if (signInError.message.includes('Invalid login credentials')) {
+          if (signInError.message.includes('Credenciales inválidas')) {
             throw new Error('Correo o contraseña incorrectos');
-          } else if (signInError.message.includes('Email not confirmed')) {
+          } else if (signInError.message.includes('Correo no confirmado')) {
             throw new Error('Debes verificar tu correo antes de iniciar sesión');
           }
           throw signInError;
@@ -115,7 +116,8 @@ export const Auth: React.FC = () => {
         <div className="relative z-20 flex flex-col justify-center px-12 text-white h-full">
           <div className="flex items-center gap-4 mb-8">
             <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center shadow-lg border-2 border-white/20">
-              <BookOpenIcon className="w-8 h-8 text-cyan-300" />
+              <img src={logo} alt="Logo" className="w-12 h-12 rounded-full" />
+
             </div>
             <h1 className="text-5xl font-bold tracking-tighter">EduFlow</h1>
           </div>
@@ -136,7 +138,7 @@ export const Auth: React.FC = () => {
           <div className="lg:hidden text-center mb-8">
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="w-12 h-12 rounded-full bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center shadow-md">
-                <BookOpenIcon className="w-6 h-6 text-cyan-600 dark:text-cyan-400" />
+                <img src={logo} alt="Logo" className="w-10 h-10 rounded-full" />
               </div>
               <h1 className="text-3xl font-bold text-slate-900 dark:text-white">EduFlow</h1>
             </div>
